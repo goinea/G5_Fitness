@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book an Appointment</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+    button { padding: 10px 15px; background-color: #28a745; color: #fff; border: none; cursor: pointer; }
+    .insta-photo { width: 100px; height: 100px; object-fit: cover; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Book an Appointment</h1>
+  <form id="bookingForm">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="datetime-local" name="appointment" required />
+    <textarea name="message" placeholder="Additional Message"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Instagram Gallery</h2>
+  <div id="gallery"></div>
+
+  <h3>Payment</h3>
+  <a href="https://cash.app/$AdamGoines" target="_blank">
+    <button>Pay via Cash App</button>
+  </a>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch('/book-appointment', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.text();
+      alert(result);
+    });
+
+    // Placeholder for Instagram Gallery
+    const gallery = document.getElementById('gallery');
+    const images = [
+      "https://placekitten.com/100/100",
+      "https://placebear.com/100/100",
+      "https://placebeard.it/100x100"
+    ];
+    images.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'insta-photo';
+      gallery.appendChild(img);
+    });
+  </script>
+</body>
+</html>
