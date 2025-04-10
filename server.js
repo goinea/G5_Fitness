@@ -7,14 +7,14 @@ const path = require('path');
 const app = express();
 const upload = multer();
 
-app.use(express.static(path.join(__dirname)));
-app.use(upload.none()); // To parse form data
+app.use(express.static(path.join(__dirname, 'public'))); // Serving static files from "public" folder
+app.use(upload.none());
 
-// OAuth2 setup for Gmail
-const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-const CLIENT_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET';
+// OAuth credentials (using environment variables)
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = 'YOUR_GOOGLE_REFRESH_TOKEN';
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
